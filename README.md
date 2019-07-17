@@ -1,12 +1,13 @@
-# flarum-ext-webpush-notification
+# Web push notifications with OneSignal for Flarum
 
+### installation
 
-### To Install 
- - Run this command: `composer require dogsports/flarum-ext-webpush-notification`
+Install manually:
 
-### Event Triggers
+```bash
+composer require nikovonlas/flarum-ext-web-push
+```
 
- - When someone likes post
- - When someone replies
- 
- 
+### configuration
+
+Don't forget to activate the extension in the admin panel of your Flarum, and use the Settings dialog to configure the extension!
