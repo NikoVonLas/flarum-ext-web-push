@@ -15,7 +15,7 @@
     ],
     "require": {
         "flarum/core":"^0.1.0-beta.9",
-        "norkunas/onesignal-php-api": "^1.11",
+        "nikovonlas/onesignal-php-api": "^1.11",
         "php-http/guzzle6-adapter": "1.1"
     },
     "support": {
