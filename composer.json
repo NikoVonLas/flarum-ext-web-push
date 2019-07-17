@@ -1,0 +1,35 @@
+{
+    "name": "nikovonlas/flarum-ext-web-push-notification",
+    "description": "Adds Web Push notification feature to flarum with OneSignal service",
+    "type": "flarum-extension",
+    "keywords": ["flarum","push","notification","web","onesignal"],
+    "author": {
+        "name": "Kevin PAULMIER"
+    },
+    "license": "MIT",
+    "require": {
+        "flarum/core":"^0.1.0-beta.9",
+        "norkunas/onesignal-php-api": "^1.11",
+        "php-http/guzzle6-adapter": "1.1"
+    },
+    "support": {
+        "source": "https://github.com/dogsports/flarum-ext-web-push-notification",
+        "issues": "https://github.com/dogsports/flarum-ext-web-push-notification/issues"
+    },
+    "autoload": {
+        "psr-4": {
+            "DogSports\\WebPush\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Web Push Notification",
+            "icon": {
+                "name": "bell",
+                "backgroundColor": "#469c9e",
+                "color": "#fff"
+            }
+        }
+    },
+    "minimum-stability":"beta"
+}
