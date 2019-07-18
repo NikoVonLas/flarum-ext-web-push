@@ -13,6 +13,7 @@ use Http\Client\Common\HttpMethodsClient as HttpClient;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
 use OneSignal\Config;
 use OneSignal\OneSignal;
+use OneSignal\Exception\OneSignalException;
 
 class SendWebPushNotification
 {
@@ -43,113 +44,195 @@ class SendWebPushNotification
 
 	public function sendWebPushNotification(Sending $event)
 	{
+		$locale = $this->settings->get('default_locale');
+
 		$translator = app(Translator::class);
 
 		$subject = $event->blueprint->getSubject();
 		if($subject == null) {
-			throw new \Exception('Empty subject');
+			return;
 		}
 
 		$receiverUsers = $event->users;
 		if(empty($receiverUsers)) {
-			throw new \Exception('Empty reciver users');
+			return;
 		}
 		$users = array();
 		foreach ($receiverUsers as $receiverUser) {
-			if($receiverUser->onesignal_user_id != null) {
-				array_push($users, $receiverUser->onesignal_user_id);
-			}
+			array_push($users, $receiverUser->id);
+		}
+
+		if (empty($users)) {
+			return;
 		}
 
 		$senderUser = $event->blueprint->getFromUser();
-		switch ($subject->getSubjectModel()) {
+		switch ($event->blueprint->getSubjectModel()) {
 			case 'Flarum\User\User':
 				$attrs = [
 					'from' => $senderUser->getDisplayNameAttribute(),
 					'user' => $subject->getDisplayNameAttribute()
 				];
-				$link = $this->url->to('forum')->route('users.show', ['id' =>  $subject->username]);
+				$link = $this->url->to('forum')->route('user', ['id' =>  $subject->username]);
 				break;
 			case 'Flarum\Discussion\Discussion':
 				$attrs = [
 					'from' =>  $senderUser->getDisplayNameAttribute(),
 					'title' => $this->excerpt($subject->title)
 				];
-				$link = $this->url->to('forum')->route('discussions.show', ['id' => $subject->id]);
+				$link = $this->url->to('forum')->route('discussion', ['id' => $subject->id]);
 				break;
 			case 'Flarum\Post\Post':
 				$attrs = [
 					'from' =>  $senderUser->getDisplayNameAttribute(),
 					'post' => $this->excerpt($subject->content)
 				];
-				$link = $this->url->to('forum')->route('posts.show', ['id' => $subject->id]);
+				$link = $this->url->to('forum')->route('discussion', ['id' => $subject->discussion_id]);
 				break;
 			default:
 				return;
 				break;
 		}
 
-		$notificationType = $event->blueprint->getType();
-		switch ($notificationType){
+		switch ($event->blueprint->getType()){
 			case 'postLiked':
 				$heading = $translator->trans('nikovonlas-webpush.notify.like.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.like.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.like.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.like.message', $attrs);
+				}
 				break;
 			case 'postMentioned':
 			  $heading = $translator->trans('nikovonlas-webpush.notify.mention-post.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.mention-post.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.mention-post.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.mention-post.title', $attrs);
+				}
 				break;
 			case 'userMentioned':
 			  $heading = $translator->trans('nikovonlas-webpush.notify.mention.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.mention.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.mention.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.mention.message', $attrs);
+				}
 				break;
 			case 'newPost':
 				$heading = $translator->trans('nikovonlas-webpush.notify.post.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.post.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.post.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.post.message', $attrs);
+				}
 				break;
 			case 'discussionRenamed':
 				$heading = $translator->trans('nikovonlas-webpush.notify.rename.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.rename.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.rename.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.rename.message', $attrs);
+				}
 				break;
 			case 'discussionLocked':
 				$heading = $translator->trans('nikovonlas-webpush.notify.lock.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.lock.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.lock.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.lock.message', $attrs);
+				}
 				break;
 			case 'discussionDeleted':
 				$heading = $translator->trans('nikovonlas-webpush.notify.delete.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.delete.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.delete.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.delete.message', $attrs);
+				}
 				break;
 			case 'userSuspended':
 				$heading = $translator->trans('nikovonlas-webpush.notify.suspend.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.suspend.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.suspend.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.suspend.message', $attrs);
+				}
 				break;
 			case 'userUnsuspended':
 				$heading = $translator->trans('nikovonlas-webpush.notify.unsuspend.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.unsuspend.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.unsuspend.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.unsuspend.message', $attrs);
+				}
 				break;
 			case 'newDiscussionInTag':
 				$heading = $translator->trans('nikovonlas-webpush.notify.tag.discussion.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.tag.discussion.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.tag.discussion.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.tag.discussion.message', $attrs);
+				}
 				break;
 			case 'newPostInTag':
 				$heading = $translator->trans('nikovonlas-webpush.notify.tag.post.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.tag.post.message', $attrs);
+				if ($locale != 'en') {
+					$translator->setLocale('en');
+					$heading_en = $translator->trans('nikovonlas-webpush.notify.tag.post.title');
+					$message_en = $translator->trans('nikovonlas-webpush.notify.tag.post.message', $attrs);
+				}
 				break;
 			default:
 				return;
 				break;
 		}
-
-		$api->notifications->add([
-			'headings' => [
-				'ru' => $heading
-			],
-			'contents' => [
-	        'ru' => $message
-	    ],
-	    'include_external_user_ids' => $users,
-			'url' => $link
-		]);
+		try {
+			$heading = $this->clearStr($heading);
+			$message = $this->clearStr($message);
+			if ($locale != 'en') {
+				$translator->setLocale($locale);
+				$heading_en = $this->clearStr($heading);
+				$message_en = $this->clearStr($message);
+				$notification = [
+					'headings' => [
+						'en' => $heading_en,
+						$locale => $heading
+					],
+					'contents' => [
+						'en' => $message_en,
+			      $locale => $message
+			    ],
+			    'include_external_user_ids' => $users,
+					'url' => $link
+				];
+			} else {
+				$notification = [
+					'headings' => [
+						'en' => $heading
+					],
+					'contents' => [
+						'en' => $message
+			    ],
+			    'include_external_user_ids' => $users,
+					'url' => $link
+				];
+			}
+			$this->oneSignalAPI->notifications->add($notification);
+		} catch (OneSignalException $e) {
+			return;
+		}
 	}
 
 	private function excerpt($str) {
@@ -158,6 +241,13 @@ class SendWebPushNotification
 				$str = mb_substr(strip_tags($str), 0, $length);
 				$str .= '...';
 		}
+		return $str;
+	}
+
+	private function clearStr($str) {
+		$str = str_replace('{', '', $str);
+		$str = str_replace('}', '', $str);
+		$str = preg_replace('/@[^#]+#[0-9]+ /', '', $str);
 		return $str;
 	}
 }

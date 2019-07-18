@@ -1,7 +1,10 @@
 nikovonlas-webpush:
+  forum:
+    subscribe: Подписаться на пуш уведомления
+    unsubscribe: Отписаться от пуш уведомлений
   admin:
     web-push-settings:
-      title: "Настройки WebPush"
+      title: Настройки WebPush
       type:
         description: Onesignal тип подключения
         standart: Standart
@@ -14,38 +17,38 @@ nikovonlas-webpush:
   notify:
     like:
       title: Пост лайкнули
-      message: {from} лайкнул ваш пост "{post}"
+      message: '{from} лайкнул ваш пост "{post}"'
     mention-post:
-      title: Вы упомянуты в посте
-      message: {from} упомянул вас в посте "{post}"
+      title: Вам ответили на пост
+      message: '{from} ответил на ваш пост "{post}"'
     mention:
       title: Пост был упомянут
-      message: {from} упомянул ваш пост "{post}"
+      message: '{from} упомянул ваш пост "{post}"'
     post:
       title: Новый пост в избранном
-      message: {from} создал пост "{post}"
+      message: '{from} создал пост "{post}"'
     tag:
       discussion:
         title: Новая тема с избранным тегом
-        message: {from} создал тему "{title}"
+        message: '{from} создал тему "{title}"'
       post:
         title: Новый пост с избранным тегом
-        message: {from} написал пост "{post}"
+        message: '{from} написал пост "{post}"'
     rename:
       title: Тема переименована
-      message: {from} переименовал тему в "{title}"
+      message: '{from} переименовал тему в "{title}"'
     lock:
       title: Тема закрыта
-      message: {from} закрыл тему "{title}"
+      message: '{from} закрыл тему "{title}"'
     delete:
       title: Тема удалена
-      message: {from} удалил вашу тему "{title}"
+      message: '{from} удалил вашу тему "{title}"'
     suspend:
       title: Ваш аккаунт забанен
-      message: {from} забанил ваш аккаунт
+      message: '{from} забанил ваш аккаунт'
     гтsuspend:
       title: Ваш аккаунт разбанен
-      message: {from} разбанил ваш аккаунт
+      message: '{from} разбанил ваш аккаунт'
     flag:
       title: Новая жалоба
-      message: {from} пожаловался на пост "{post}"
+      message: '{from} пожаловался на пост "{post}"'

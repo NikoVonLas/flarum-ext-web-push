@@ -10,4 +10,15 @@ composer require nikovonlas/flarum-ext-web-push
 
 ### configuration
 
-Don't forget to activate the extension in the admin panel of your Flarum, and use the Settings dialog to configure the extension!
+Activate the extension in the admin panel of your Flarum.
+Register in onesignal.com and create a new app an configure notifications as typical site, and use the Settings dialog in your website to configure the extension.
+
+###To Do
+>Subscribation variations to settings page
+>Provide prompts from Onesignal
+>Custom code site type
+
+### links
+[GitHub](https://github.com/NikoVonLas/flarum-ext-web-push)
+[Flarum disscussion page](https://discuss.flarum.org/d/20784-onesignal-web-push-notifications)
+[Packagist](https://packagist.org/packages/nikovonlas/flarum-ext-web-push)

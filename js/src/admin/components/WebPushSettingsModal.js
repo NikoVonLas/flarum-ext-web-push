@@ -6,7 +6,7 @@ export default class WebPushSettingsModal extends SettingsModal {
     }
 
     title() {
-        return app.translator.trans('nikovonlas-webpush.admin.title');
+        return app.translator.trans('nikovonlas-webpush.admin.web-push-settings.title');
     }
 
     form() {
