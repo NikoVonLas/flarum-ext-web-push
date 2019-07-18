@@ -20,4 +20,5 @@ Register in onesignal.com and create a new app an configure notifications as typ
 
 ### links
 [Flarum disscussion page](https://discuss.flarum.org/d/20784-onesignal-web-push-notifications)
+
 [Packagist](https://packagist.org/packages/nikovonlas/flarum-ext-web-push)
