@@ -19,10 +19,7 @@ class AddWebPushAttribute {
 	}
 
 	public function addAttributes(Serializing $event) {
-		$event->attributes['nikovonlas_webpush_app_id'] = $this->settings->get('nikovonlas-webpush.onesignal_app_id');
-		$event->attributes['nikovonlas_webpush_subdomain'] = $this->settings->get('nikovonlas-webpush.onesignal_subdomain');
-		if ($event->isSerializer(UserSerializer::class)) {
-			$event->attributes['onesignal_user_id'] = $event->model->onesignal_user_id;
-		}
+		$event->attributes['nikovonlas_webpush.app_id'] = $this->settings->get('nikovonlas-webpush.app_id');
+		$event->attributes['nikovonlas_webpush.subdomain'] = $this->settings->get('nikovonlas-webpush.subdomain');
 	}
 }

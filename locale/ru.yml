@@ -1,9 +1,8 @@
 nikovonlas-webpush:
   forum:
-    subscribe: Подписаться на пуш уведомления
-    unsubscribe: Отписаться от пуш уведомлений
+    subscribe: Подписка на пуш уведомления
   admin:
-    web-push-settings:
+    settings:
       title: Настройки WebPush
       type:
         description: Onesignal тип подключения
@@ -14,6 +13,7 @@ nikovonlas-webpush:
       user_key: Onesignal user key
       subdomain: Onesignal subdomain
       excerpt: Длинна скоращений в оповещениях
+      autoprompt: Показывать запрос на оповещения сразу(для авторизовавшихся пользователей)
   notify:
     like:
       title: Пост лайкнули
@@ -46,7 +46,7 @@ nikovonlas-webpush:
     suspend:
       title: Ваш аккаунт забанен
       message: '{from} забанил ваш аккаунт'
-    гтsuspend:
+    unsuspend:
       title: Ваш аккаунт разбанен
       message: '{from} разбанил ваш аккаунт'
     flag:

@@ -10,8 +10,16 @@ composer require nikovonlas/flarum-ext-web-push
 
 ### configuration
 
+Upload files from /vendor/nikovonlas/flarum-ext-web-push/upload/ to you public folder.
 Activate the extension in the admin panel of your Flarum.
 Register in onesignal.com and create a new app an configure notifications as typical site, and use the Settings dialog in your website to configure the extension.
+
+### updating
+
+```bash
+composer update nikovonlas/flarum-ext-web-push
+php flarum cache:clear
+```
 
 ### todo
 1. Subscribation variations to settings page

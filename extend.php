@@ -4,10 +4,8 @@ namespace NikoVonLas\WebPush;
 
 use Flarum\Extend;
 use Flarum\Frontend\Document;
+use Flarum\Event\ConfigureUserPreferences;
 use Illuminate\Contracts\Events\Dispatcher;
-use NikoVonLas\WebPush\Content\WebPushManifestController;
-use NikoVonLas\WebPush\Content\WebPushWorkerController;
-use NikoVonLas\WebPush\Content\WebPushUpdaterController;
 
 return [
     new Extend\Locales(__DIR__.'/locale'),
@@ -23,7 +21,9 @@ return [
 
     function (Dispatcher $events) {
 			$events->subscribe(Listener\AddWebPushAttribute::class);
-			$events->subscribe(Listener\WhileUserUpdate::class);
 			$events->subscribe(Listener\SendWebPushNotification::class);
+      $events->listen(ConfigureUserPreferences::class, function (ConfigureUserPreferences $event) {
+          $event->add('webPushNotifications', 'boolval', false);
+      });
     },
 ];

@@ -1,9 +1,8 @@
 nikovonlas-webpush:
   forum:
     subscribe: Subscribe to push notifications
-    unsubscribe: Unsubscribe from push notifications
   admin:
-    web-push-settings:
+    settings:
       title: WebPush Settings
       type:
         description: Onesignal type of connector
@@ -14,6 +13,7 @@ nikovonlas-webpush:
       user_key: Onesignal user key
       subdomain: Onesignal subdomain
       excerpt: Length of excerpt in notifications
+      autoprompt: Show permission prompt immediately to authorize users
   notify:
     like:
       title: Post was liked
@@ -46,7 +46,7 @@ nikovonlas-webpush:
     suspend:
       title: You account was suspended
       message: '{from} suspend you account'
-    гтsuspend:
+    unsuspend:
       title: You account was unsuspended
       message: '{from} unsuspend you account'
     flag:

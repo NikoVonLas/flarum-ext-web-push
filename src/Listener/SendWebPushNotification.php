@@ -28,11 +28,11 @@ class SendWebPushNotification
 		$this->applicationBaseURL = $application->config('url');
 
 		$config = new Config();
-		$config->setApplicationId($this->settings->get('nikovonlas-webpush.onesignal_app_id'));
-		$config->setApplicationAuthKey($this->settings->get('nikovonlas-webpush.onesignal_api_key'));
-		$config->setUserAuthKey($this->settings->get('nikovonlas-webpush.onesignal_user_key'));
+		$config->setApplicationId($this->settings->get('nikovonlas-webpush.app_id'));
+		$config->setApplicationAuthKey($this->settings->get('nikovonlas-webpush.api_key'));
+		$config->setUserAuthKey($this->settings->get('nikovonlas-webpush.user_key'));
 
-		$guzzle = new GuzzleClient;
+		$guzzle = new GuzzleClient();
 		$client = new HttpClient(new GuzzleAdapter($guzzle), new GuzzleMessageFactory());
 		$this->oneSignalAPI = new OneSignal($config, $client);
 	}
@@ -70,22 +70,22 @@ class SendWebPushNotification
 		switch ($event->blueprint->getSubjectModel()) {
 			case 'Flarum\User\User':
 				$attrs = [
-					'from' => $senderUser->getDisplayNameAttribute(),
-					'user' => $subject->getDisplayNameAttribute()
+					'{from}' => $senderUser->getDisplayNameAttribute(),
+					'{user}' => $subject->getDisplayNameAttribute()
 				];
 				$link = $this->url->to('forum')->route('user', ['id' =>  $subject->username]);
 				break;
 			case 'Flarum\Discussion\Discussion':
 				$attrs = [
-					'from' =>  $senderUser->getDisplayNameAttribute(),
-					'title' => $this->excerpt($subject->title)
+					'{from}' =>  $senderUser->getDisplayNameAttribute(),
+					'{title}' => $this->excerpt($subject->title)
 				];
 				$link = $this->url->to('forum')->route('discussion', ['id' => $subject->id]);
 				break;
 			case 'Flarum\Post\Post':
 				$attrs = [
-					'from' =>  $senderUser->getDisplayNameAttribute(),
-					'post' => $this->excerpt($subject->content)
+					'{from}' =>  $senderUser->getDisplayNameAttribute(),
+					'{post}' => $this->excerpt($subject->content)
 				];
 				$link = $this->url->to('forum')->route('discussion', ['id' => $subject->discussion_id]);
 				break;
@@ -199,12 +199,8 @@ class SendWebPushNotification
 				break;
 		}
 		try {
-			$heading = $this->clearStr($heading);
-			$message = $this->clearStr($message);
 			if ($locale != 'en') {
 				$translator->setLocale($locale);
-				$heading_en = $this->clearStr($heading);
-				$message_en = $this->clearStr($message);
 				$notification = [
 					'headings' => [
 						'en' => $heading_en,
@@ -241,13 +237,6 @@ class SendWebPushNotification
 				$str = mb_substr(strip_tags($str), 0, $length);
 				$str .= '...';
 		}
-		return $str;
-	}
-
-	private function clearStr($str) {
-		$str = str_replace('{', '', $str);
-		$str = str_replace('}', '', $str);
-		$str = preg_replace('/@[^#]+#[0-9]+ /', '', $str);
 		return $str;
 	}
 }
