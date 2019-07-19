@@ -19,20 +19,20 @@ nikovonlas-webpush:
       title: Post was liked
       message: '{from} liked you post "{post}"'
     mention-post:
-      title: You was mentoined in post
-      message: '{from} mentoined you in post "{post}"'
+      title: 'New reply to post in "{title}"'
+      message: '{from} replied to post "{post}"'
     mention:
-      title: Post was mentoined
+      title: 'You was mentoined in "{title}"'
       message: '{from} mentoined you post "{post}"'
     post:
-      title: New post in subscribed section
+      title: 'New post in subscribed discussion "{title}"'
       message: '{from} create new post "{post}"'
     tag:
       discussion:
-        title: New discussion in subscribed tag
+        title: New discussion with subscribed tag
         message: '{from} create new discussion "{title}"'
       post:
-        title: New post in subscribed tag
+        title: 'New post in discussion "{title}"'
         message: '{from} create new post "{post}"'
     rename:
       title: Discussion was renamed

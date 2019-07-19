@@ -17,38 +17,38 @@ nikovonlas-webpush:
   notify:
     like:
       title: Пост лайкнули
-      message: '{from} лайкнул ваш пост "{post}"'
+      message: '{from} лайкнул(a) ваш пост "{post}"'
     mention-post:
-      title: Вам ответили на пост
-      message: '{from} ответил на ваш пост "{post}"'
+      title: 'Вам ответили на пост в теме "{title}"'
+      message: '{from} ответил(a) на ваш пост "{post}"'
     mention:
-      title: Пост был упомянут
-      message: '{from} упомянул ваш пост "{post}"'
+      title: 'Вас упомянули в теме "{title}"'
+      message: '{from} упомянул(a) вас в посте "{post}"'
     post:
-      title: Новый пост в избранном
-      message: '{from} создал пост "{post}"'
+      title: 'Новый пост в избранном "{title}"'
+      message: '{from} создал(a) пост "{post}"'
     tag:
       discussion:
         title: Новая тема с избранным тегом
-        message: '{from} создал тему "{title}"'
+        message: '{from} создал(a) тему "{title}"'
       post:
-        title: Новый пост с избранным тегом
-        message: '{from} написал пост "{post}"'
+        title: 'Новый пост в теме "{title}"'
+        message: '{from} написал(a) пост "{post}"'
     rename:
       title: Тема переименована
-      message: '{from} переименовал тему в "{title}"'
+      message: '{from} переименовал(a) тему в "{title}"'
     lock:
       title: Тема закрыта
-      message: '{from} закрыл тему "{title}"'
+      message: '{from} закрыл(a) тему "{title}"'
     delete:
       title: Тема удалена
-      message: '{from} удалил вашу тему "{title}"'
+      message: '{from} удалил(a) вашу тему "{title}"'
     suspend:
       title: Ваш аккаунт забанен
-      message: '{from} забанил ваш аккаунт'
+      message: '{from} забанил(a) ваш аккаунт'
     unsuspend:
       title: Ваш аккаунт разбанен
-      message: '{from} разбанил ваш аккаунт'
+      message: '{from} разбанил(a) ваш аккаунт'
     flag:
       title: Новая жалоба
-      message: '{from} пожаловался на пост "{post}"'
+      message: '{from} пожаловался(ась) на пост "{post}"'
