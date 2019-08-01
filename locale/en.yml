@@ -17,32 +17,32 @@ nikovonlas-webpush:
   notify:
     like:
       title: Post was liked
-      message: '{from} liked you post "{post}"'
+      message: '{from} liked you post: {post}'
     mention-post:
-      title: 'New reply to post in "{title}"'
-      message: '{from} replied to post "{post}"'
+      title: 'New reply to post in: {title}'
+      message: '{from} replied to post: {post}'
     mention:
-      title: 'You was mentoined in "{title}"'
-      message: '{from} mentoined you post "{post}"'
+      title: 'You was mentoined in: {title}'
+      message: '{from} mentoined you post: {post}'
     post:
-      title: 'New post in subscribed discussion "{title}"'
-      message: '{from} create new post "{post}"'
+      title: 'New post in subscribed discussion: {title}'
+      message: '{from} create new post: {post}'
     tag:
       discussion:
         title: New discussion with subscribed tag
-        message: '{from} create new discussion "{title}"'
+        message: '{from} create new discussion: {title}'
       post:
-        title: 'New post in discussion "{title}"'
-        message: '{from} create new post "{post}"'
+        title: 'New post in discussion: {title}'
+        message: '{from} create new post: {post}'
     rename:
       title: Discussion was renamed
-      message: '{from} rename you discussion to "{title}"'
+      message: '{from} rename you discussion to: {title}'
     lock:
       title: Discussion was locked
-      message: '{from} locked you discussion "{title}"'
+      message: '{from} locked you discussion: {title}'
     delete:
       title: Discussion was deleted
-      message: '{from} delete you discussion "{title}"'
+      message: '{from} delete you discussion: {title}'
     suspend:
       title: You account was suspended
       message: '{from} suspend you account'
@@ -51,4 +51,4 @@ nikovonlas-webpush:
       message: '{from} unsuspend you account'
     flag:
       title: New flagged post
-      message: '{from} flag post "{post}"'
+      message: '{from} flag post: {post}'
