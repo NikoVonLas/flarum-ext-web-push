@@ -75,7 +75,7 @@ class SendWebPushNotification
 					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{post}' => $this->excerpt($subject->content)
 				];
-				$link = $url->route('discussion', ['id' => $subject->discussion_id], ['id' => $subject->number]);
+				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
 				break;
 			default:
 				return;
@@ -88,7 +88,7 @@ class SendWebPushNotification
 					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{post}' => $this->excerpt($subject->content)
 				];
-				$link = $url->route('discussion', ['id' => $subject->discussion_id], ['id' => $subject->number]);
+				$link = $url->route('discussion', ['id' => $subject->discussion_id], 'near' => $subject->number]);
 				$heading = $translator->trans('nikovonlas-webpush.notify.like.title');
 				$message = $translator->trans('nikovonlas-webpush.notify.like.message', $attrs);
 				if ($locale != 'en') {
@@ -105,7 +105,7 @@ class SendWebPushNotification
 				$headingAttrs = [
 					'{title}' => $this->excerpt($subject->discussion->title)
 				];
-				$link = $url->route('discussion', ['id' => $subject->discussion_id], ['id' => $subject->number]);
+				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
 			  $heading = $translator->trans('nikovonlas-webpush.notify.mention-post.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.mention-post.message', $attrs);
 				if ($locale != 'en') {
@@ -122,7 +122,7 @@ class SendWebPushNotification
 				$headingAttrs = [
 					'{title}' => $this->excerpt($subject->discussion->title)
 				];
-				$link = $url->route('discussion', ['id' => $subject->discussion_id], ['id' => $subject->number]);
+				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
 			  $heading = $translator->trans('nikovonlas-webpush.notify.mention.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.mention.message', $attrs);
 				if ($locale != 'en') {
@@ -139,7 +139,7 @@ class SendWebPushNotification
 				$headingAttrs = [
 					'{title}' => $this->excerpt($subject->title)
 				];
-				$link = $url->route('discussion', ['id' => $subject->id], ['id' => $subject->number]);
+				$link = $url->route('discussion', ['id' => $subject->id, 'near' => $subject->number]);
 				$heading = $translator->trans('nikovonlas-webpush.notify.post.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.post.message', $attrs);
 				if ($locale != 'en') {
@@ -241,7 +241,7 @@ class SendWebPushNotification
 				$headingAttrs = [
 					'{title}' => $this->excerpt($subject->title)
 				];
-				$link = $url->route('discussion', ['id' => $subject->discussion_id], ['id' => $subject->number]);
+				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
 				$heading = $translator->trans('nikovonlas-webpush.notify.tag.post.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.tag.post.message', $attrs);
 				if ($locale != 'en') {
