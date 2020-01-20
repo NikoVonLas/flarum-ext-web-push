@@ -85,6 +85,7 @@ class SendWebPushNotification
 		switch ($event->blueprint->getType()){
 			case 'postLiked':
 				$attrs = [
+					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{post}' => $this->excerpt($subject->content)
 				];
 				$headingAttrs = [
@@ -101,10 +102,12 @@ class SendWebPushNotification
 				break;
 			case 'postMentioned':
 				$attrs = [
+					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{post}' => $this->excerpt($subject->content)
 				];
 				$headingAttrs = [
-					'{from}' =>  $senderUser->getDisplayNameAttribute()
+					'{from}' =>  $senderUser->getDisplayNameAttribute(),
+					'{title}' => $this->excerpt($subject->title)
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
 			  $heading = $translator->trans('nikovonlas-webpush.notify.mention-post.title', $headingAttrs);
@@ -117,10 +120,12 @@ class SendWebPushNotification
 				break;
 			case 'userMentioned':
 				$attrs = [
+					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{post}' => $this->excerpt($subject->content)
 				];
 				$headingAttrs = [
-					'{from}' =>  $senderUser->getDisplayNameAttribute()
+					'{from}' =>  $senderUser->getDisplayNameAttribute(),
+					'{title}' => $this->excerpt($subject->title)
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
 			  $heading = $translator->trans('nikovonlas-webpush.notify.mention.title', $headingAttrs);
@@ -170,7 +175,8 @@ class SendWebPushNotification
 					'{from}' =>  $senderUser->getDisplayNameAttribute()
 				];
 				$headingAttrs = [
-				    '{title}' => $this->excerpt($subject->title)  
+				    '{title}' => $this->excerpt($subject->title),
+				    '{from}' =>  $senderUser->getDisplayNameAttribute()
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id]);
 				$heading = $translator->trans('nikovonlas-webpush.notify.lock.title', $headingAttrs);
@@ -187,7 +193,8 @@ class SendWebPushNotification
 					'{from}' =>  $senderUser->getDisplayNameAttribute()
 				];
 				$headingAttrs = [
-				    '{title}' => $this->excerpt($subject->title)  
+				    '{title}' => $this->excerpt($subject->title),
+			            '{from}' =>  $senderUser->getDisplayNameAttribute()
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id]);
 				$heading = $translator->trans('nikovonlas-webpush.notify.delete.title', $headingAttrs);
@@ -227,6 +234,7 @@ class SendWebPushNotification
 			case 'newDiscussionInTag':
 				$attrs = [
 					'{from}' =>  $senderUser->getDisplayNameAttribute(),
+					'{title}' => $this->excerpt($subject->title)  
 				];
 				$headingAttrs = [
 				    '{title}' => $this->excerpt($subject->title)  
