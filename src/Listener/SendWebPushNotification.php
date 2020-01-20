@@ -85,11 +85,13 @@ class SendWebPushNotification
 		switch ($event->blueprint->getType()){
 			case 'postLiked':
 				$attrs = [
-					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{post}' => $this->excerpt($subject->content)
 				];
-				$link = $url->route('discussion', ['id' => $subject->discussion_id], 'near' => $subject->number]);
-				$heading = $translator->trans('nikovonlas-webpush.notify.like.title');
+				$headingAttrs = [
+					'{from}' =>  $senderUser->getDisplayNameAttribute()
+				];
+				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
+				$heading = $translator->trans('nikovonlas-webpush.notify.like.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.like.message', $attrs);
 				if ($locale != 'en') {
 					$translator->setLocale('en');
@@ -99,11 +101,10 @@ class SendWebPushNotification
 				break;
 			case 'postMentioned':
 				$attrs = [
-					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{post}' => $this->excerpt($subject->content)
 				];
 				$headingAttrs = [
-					'{title}' => $this->excerpt($subject->discussion->title)
+					'{from}' =>  $senderUser->getDisplayNameAttribute()
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
 			  $heading = $translator->trans('nikovonlas-webpush.notify.mention-post.title', $headingAttrs);
@@ -116,11 +117,10 @@ class SendWebPushNotification
 				break;
 			case 'userMentioned':
 				$attrs = [
-					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{post}' => $this->excerpt($subject->content)
 				];
 				$headingAttrs = [
-					'{title}' => $this->excerpt($subject->discussion->title)
+					'{from}' =>  $senderUser->getDisplayNameAttribute()
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id, 'near' => $subject->number]);
 			  $heading = $translator->trans('nikovonlas-webpush.notify.mention.title', $headingAttrs);
@@ -153,8 +153,11 @@ class SendWebPushNotification
 					'{from}' =>  $senderUser->getDisplayNameAttribute(),
 					'{title}' => $this->excerpt($subject->title)
 				];
+				$headingAttrs = [
+				    '{title}' => $this->excerpt($subject->title)
+				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id]);
-				$heading = $translator->trans('nikovonlas-webpush.notify.rename.title');
+				$heading = $translator->trans('nikovonlas-webpush.notify.rename.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.rename.message', $attrs);
 				if ($locale != 'en') {
 					$translator->setLocale('en');
@@ -164,11 +167,13 @@ class SendWebPushNotification
 				break;
 			case 'discussionLocked':
 				$attrs = [
-					'{from}' =>  $senderUser->getDisplayNameAttribute(),
-					'{title}' => $this->excerpt($subject->title)
+					'{from}' =>  $senderUser->getDisplayNameAttribute()
+				];
+				$headingAttrs = [
+				    '{title}' => $this->excerpt($subject->title)  
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id]);
-				$heading = $translator->trans('nikovonlas-webpush.notify.lock.title');
+				$heading = $translator->trans('nikovonlas-webpush.notify.lock.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.lock.message', $attrs);
 				if ($locale != 'en') {
 					$translator->setLocale('en');
@@ -179,11 +184,13 @@ class SendWebPushNotification
 			case 'discussionDeleted':
 				// NOT IMPLEMENT!
 				$attrs = [
-					'{from}' =>  $senderUser->getDisplayNameAttribute(),
-					'{title}' => $this->excerpt($subject->title)
+					'{from}' =>  $senderUser->getDisplayNameAttribute()
+				];
+				$headingAttrs = [
+				    '{title}' => $this->excerpt($subject->title)  
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id]);
-				$heading = $translator->trans('nikovonlas-webpush.notify.delete.title');
+				$heading = $translator->trans('nikovonlas-webpush.notify.delete.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.delete.message', $attrs);
 				if ($locale != 'en') {
 					$translator->setLocale('en');
@@ -193,8 +200,7 @@ class SendWebPushNotification
 				break;
 			case 'userSuspended':
 				$attrs = [
-					'{from}' => $senderUser->getDisplayNameAttribute(),
-					'{user}' => $subject->getDisplayNameAttribute()
+					'{from}' => $senderUser->getDisplayNameAttribute()
 				];
 				$link = $url->route('user', ['id' =>  $subject->username]);
 				$heading = $translator->trans('nikovonlas-webpush.notify.suspend.title');
@@ -207,8 +213,7 @@ class SendWebPushNotification
 				break;
 			case 'userUnsuspended':
 				$attrs = [
-					'{from}' => $senderUser->getDisplayNameAttribute(),
-					'{user}' => $subject->getDisplayNameAttribute()
+					'{from}' => $senderUser->getDisplayNameAttribute()
 				];
 				$link = $url->route('user', ['id' =>  $subject->username]);
 				$heading = $translator->trans('nikovonlas-webpush.notify.unsuspend.title');
@@ -222,10 +227,12 @@ class SendWebPushNotification
 			case 'newDiscussionInTag':
 				$attrs = [
 					'{from}' =>  $senderUser->getDisplayNameAttribute(),
-					'{title}' => $this->excerpt($subject->title)
+				];
+				$headingAttrs = [
+				    '{title}' => $this->excerpt($subject->title)  
 				];
 				$link = $url->route('discussion', ['id' => $subject->discussion_id]);
-				$heading = $translator->trans('nikovonlas-webpush.notify.tag.discussion.title');
+				$heading = $translator->trans('nikovonlas-webpush.notify.tag.discussion.title', $headingAttrs);
 				$message = $translator->trans('nikovonlas-webpush.notify.tag.discussion.message', $attrs);
 				if ($locale != 'en') {
 					$translator->setLocale('en');
